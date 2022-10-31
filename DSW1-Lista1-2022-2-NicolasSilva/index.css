@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+
+@media print {
+    * {
+        font-family: 'Times New Roman', Times, serif;
+        text-align: justify;
+    }
+
+    @page {
+        size: A4;
+        margin: 2cm;
+    }
+
+    body {
+        column-count: 2;
+        column-fill: balance;
+    }
+
+    body > h1::before {
+        counter-reset: capitulo;
+    }
+
+    body > section > h2::before {
+        content: counter(capitulo) ". ";
+        counter-increment: capitulo;
+    }
+
+    p {
+        font-size: 10pt;
+        orphans: 3;
+        widows: 3;
+    }
+
+    .title {
+        font-size: 24pt;
+        text-align: center;
+        column-span: all;
+    }
+}
