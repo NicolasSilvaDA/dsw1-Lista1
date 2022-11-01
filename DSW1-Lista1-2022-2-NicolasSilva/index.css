@@ -2,34 +2,96 @@
 
 
 @media print {
-    * {
-        font-family: 'Times New Roman', Times, serif;
-        text-align: justify;
-    }
-
     @page {
         size: A4;
         margin: 2cm;
-    }
-
-    body {
-        column-count: 2;
-        column-fill: balance;
-    }
-
-    body > h1::before {
-        counter-reset: capitulo;
-    }
-
-    body > section > h2::before {
-        content: counter(capitulo) ". ";
-        counter-increment: capitulo;
-    }
-
-    p {
+        padding: 0;
+        font-family: 'Times New Roman', Times, serif;
         font-size: 10pt;
         orphans: 3;
         widows: 3;
+
+        @bottom-center {
+            content: counter(page);
+        }
+
+    }
+/*
+    span.footnote {
+        float: footnote;
+        font-size: 25pt;
+    }
+
+    span.footnote::footnote-call {
+        content: counter(footnote, decimal);
+    }
+
+    span.footnote::footnote-marker {
+        content: counter(footnote, decimal);
+        
+    }
+*/
+    body {
+        column-count: 2;
+        column-fill: balance;
+        counter-reset: secao;
+    }
+
+    body h1{
+        text-align: center;
+        font-size: 12pt;
+    }
+    
+    body > h1::before {
+        content: counter(secao, upper-roman) ". ";
+        counter-increment: secao; 
+    }
+
+    div.equation {
+        text-align: center;
+        counter-reset: eq;
+    }
+
+    div.equation::after {
+        content: "(" counter(eq, decimal) ")";
+        counter-increment: eq;
+    }
+
+    section {
+        counter-reset: subsecao;
+    }
+
+    section > h2 {
+        font-style: italic;
+        font-weight: normal;
+        font-size: 10pt;
+    }
+
+    section > h2::before {
+        content: counter(subsecao, upper-alpha) ". ";
+        counter-increment: subsecao;
+    }
+
+    a::after{
+        content: "[" target-counter(attr(href, url), referencia);
+    }
+
+    p {
+        text-align: justify;
+    }
+
+    div.references {
+        counter-reset: referencia;
+    }
+
+    div.references > cite {
+        display: block; 
+        text-align: justify;
+    }
+
+    cite::before {
+        content: "[" counter(referencia) "]";
+        counter-increment: referencia;
     }
 
     .title {
