@@ -6,6 +6,13 @@
         size: A4;
         margin: 2cm;
         padding: 0;
+
+        @footnote {
+            margin-top: 15px;
+            padding-bottom: 10px; 
+            border-top: 0.5px solid black;
+            border-clip: 48pt;
+        }
     }
 
     @page:first {
@@ -42,7 +49,7 @@
         column-count: 2;
         column-fill: balance;
         column-gap: 0.9cm;
-        counter-reset: secao eq tabela figura rodape referencia;
+        counter-reset: secao eq tabela figura referencia;
         font-size: 10pt;
         font-family: 'Times New Roman', Times, serif;
     }
@@ -56,17 +63,20 @@
     }
     
     body > h1::before {
+        counter-increment: secao;
         content: counter(secao, upper-roman) ". ";
-        counter-increment: secao; 
     }
 
     div.equation {
+        position: relative;
         text-align: center;
     }
 
     div.equation::after {
-        content: "(" counter(eq, decimal) ")";
+        position: absolute;
+        right: 0;
         counter-increment: eq;
+        content: "(" counter(eq, decimal) ")";
     }
 
     section {
@@ -90,26 +100,26 @@
     }
 
     a::after {
-        content: "[" target-counter(attr(href, url), referencia, decimal) "]";
+        content: '[' target-counter(attr(href), referencia) ']';
     }
 
     a.equation::after {
-        content: "Eq. " target-counter(attr(href, url), eq, decimal);
+        content: "Eq. " target-counter(attr(href), eq);
         font-style: italic;
     }
 
     a.section::after {
-        content: target-counter(attr(href, url), secao, upper-roman);
+        content: target-counter(attr(href), secao, upper-roman);
         font-style: italic;
     }
 
     a.table::after {
-        content: "Table " target-counter(attr(href, url), tabela, decimal);
+        content: "Table " target-counter(attr(href), tabela);
         font-style: italic;
     }
 
     a.figure::after {
-        content: "Fig. " target-counter(attr(href, url), figura, decimal);
+        content: "Fig. " target-counter(attr(href), figura);
         font-style: italic;
     }
 
@@ -133,13 +143,13 @@
     }
 
     table caption::before {
-        content: "Table " counter(tabela) ". ";
         counter-increment: tabela;
+        content: "Table " counter(tabela) ". ";
     }
 
     table thead {
         font-weight: bold;
-        border-bottom: 1px solid black;
+        border-bottom: .5px solid black;
     }
 
     table tbody {
@@ -171,8 +181,8 @@
     }
 
     figure figcaption::before {
-        content: "Fig. " counter(figura) ". ";
         counter-increment: figura;
+        content: "Fig. " counter(figura) ". ";
     }
 
     h5.references {
@@ -197,14 +207,11 @@
         position: absolute;
         left: 0;
         display: inline-block;
-        content: "[" counter(referencia) "]";
         counter-increment: referencia;
+        content: "[" counter(referencia) "]";
     }
 
     span.footnote {
-        margin-top: 30px;
-        padding-top: 10px;
-        border-top: 0.5px solid black;
         float: footnote;
         font-size: 8pt;
         text-decoration: none;
