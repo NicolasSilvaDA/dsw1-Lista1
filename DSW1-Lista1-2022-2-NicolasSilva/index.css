@@ -46,10 +46,10 @@
     }
 
     body {
+        counter-reset: secao eq tabela figura referencia;
         column-count: 2;
         column-fill: balance;
         column-gap: 0.9cm;
-        counter-reset: secao eq tabela figura referencia;
         font-size: 10pt;
         font-family: 'Times New Roman', Times, serif;
     }
